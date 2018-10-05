@@ -1,8 +1,6 @@
-sudo: true
 os:
 - osx
-language: ruby
-script: for i in ./Formula/*.rb; do brew audit --strict --debug $i; done
+script: for file in ./Formula/*.rb; do echo "Auditing $file"; brew audit --strict $file; done
 git:
   depth: 1
 branches:
