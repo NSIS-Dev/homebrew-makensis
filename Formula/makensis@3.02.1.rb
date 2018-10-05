@@ -18,7 +18,7 @@ class MakensisAT3021 < Formula
   # See https://nsis.sourceforge.io/Special_Builds#Large_strings
   option "with-large-strings", "Enable strings up to 8192 characters instead of default 1024"
 
-  option "debug", "Build executables with debugging information"
+  option "with-debug", "Build executables with debugging information"
 
   depends_on "mingw-w64" => :build
   depends_on "scons" => :build
@@ -28,18 +28,7 @@ class MakensisAT3021 < Formula
     sha256 "deef3e3d90ab1a9e0ef294fff85eead25edbcb429344ad42fc9bc42b5c3b1fb5"
   end
 
-  # v1.2.8 is outdated, but the last version available as compiled DLL
-  resource "zlib-win32" do
-    url "https://downloads.sourceforge.net/project/libpng/zlib/1.2.8/zlib128-dll.zip"
-    sha256 "a03fd15af45e91964fb980a30422073bc3f3f58683e9fdafadad3f7db10762b1"
-  end
-
   def install
-    # requires zlib (win32) to build utils
-    resource("zlib-win32").stage do
-      @zlib_path = Dir.pwd
-    end
-
     args = [
       "CC=#{ENV.cc}",
       "CXX=#{ENV.cxx}",
@@ -48,7 +37,6 @@ class MakensisAT3021 < Formula
       # Don't strip, see https://github.com/Homebrew/homebrew/issues/28718
       "STRIP=0",
       "VERSION=#{version}",
-      "ZLIB_W32=#{@zlib_path}",
     ]
 
     args << "NSIS_CONFIG_LOG=yes" if build.with? "advanced-logging"

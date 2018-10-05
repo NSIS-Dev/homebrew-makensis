@@ -68,4 +68,3 @@ const allVersions = [...versions.stable.v3];
 allVersions.forEach( version => {
   createManifest(version);
 });
-
