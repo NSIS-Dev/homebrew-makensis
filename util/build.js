@@ -14,7 +14,7 @@ let getHash = (blob) => {
 };
 
 let template = (outFile, data) => {
-  data.classPrefix = (outFile.startsWith('Aliases')) ? 'Nsis' : 'Makensis';
+  data.classPrefix = (outFile.startsWith('Aliases/')) ? 'Nsis' : 'Makensis';
 
   ejs.renderFile(join(__dirname, '/formula.ejs'), data, function(err, contents) {
     if (err) {
@@ -48,8 +48,7 @@ const createManifest = async (version) => {
     blob = await download(bzUrl);
     data.hashBzip2 = getHash(blob);
 
-    template(`Formula/nsis@${data.version}.rb`, data);
-    template(`Aliases/makensis@${data.version}.rb`, data);
+    template(`Formula/makensis@${data.version}.rb`, data);
   } catch(error) {
     if (error.statusMessage) {
       if (error.statusMessage === 'Too Many Requests') {
