@@ -21,9 +21,6 @@ let template = (outFile, data) => {
       return;
     }
 
-    outFile = (outFile !== null) ? outFile : `Formula/nsis@${data.version}.rb`;
-    // contents = JSON.stringify(JSON.parse(contents), null, 4);
-
     writeFile(outFile, contents, (err) => {
       if (err) throw err;
       console.log(symbol.success, `Saved: ${outFile}`);
@@ -31,7 +28,7 @@ let template = (outFile, data) => {
   });
 };
 
-const createManifest = async (version, outFile = null) => {
+const createManifest = async (version) => {
   let data = {};
   let blob;
 
@@ -50,17 +47,17 @@ const createManifest = async (version, outFile = null) => {
     blob = await download(bzUrl);
     data.hashBzip2 = getHash(blob);
 
-    template(outFile, data)
+    template(`Formula/nsis@${data.version}.rb`, data);
   } catch(error) {
     if (error.statusMessage) {
-        if (error.statusMessage === 'Too Many Requests') {
-          return console.warn(symbol.warning, `${error.statusMessage}: nsis-${version}.zip`);
-        }
-        return console.error(symbol.error, `${error.statusMessage}: nsis-${version}.zip`);
-      } else if (error.code === 'ENOENT') {
-        return console.log('Skipping Test: Manifest Not Found');
+      if (error.statusMessage === 'Too Many Requests') {
+        return console.warn(symbol.warning, `${error.statusMessage}: nsis-${version}.zip`);
       }
-      console.error(symbol.error, error);
+      return console.error(symbol.error, `${error.statusMessage}: nsis-${version}.zip`);
+    } else if (error.code === 'ENOENT') {
+      return console.log('Skipping Test: Manifest Not Found');
+    }
+    console.error(symbol.error, error);
   }
 };
 

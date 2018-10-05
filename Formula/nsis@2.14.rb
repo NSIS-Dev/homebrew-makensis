@@ -1,8 +1,8 @@
-class NsisAT<%= versionNoDot %> < Formula
+class NsisAT214 < Formula
   desc "System to create Windows installers"
   homepage "https://nsis.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/nsis/NSIS%20<%= versionMajor %>/<%= version %>/nsis-<%= version %>-src.tar.bz2"
-  sha256 "<%= hashBzip2 %>"
+  url "https://downloads.sourceforge.net/project/nsis/NSIS%202/2.14/nsis-2.14-src.tar.bz2"
+  sha256 "9aaf85dbf02d8532995550e53ba41f537f6c354357f04a6e9048b143d5f7661f"
 
   bottle do
     cellar :any_skip_relocation
@@ -24,8 +24,8 @@ class NsisAT<%= versionNoDot %> < Formula
   depends_on "scons" => :build
 
   resource "nsis" do
-    url "https://downloads.sourceforge.net/project/nsis/NSIS%20<%= versionMajor %>/<%= version %>/nsis-<%= version %>.zip"
-    sha256 "<%= hashZip %>"
+    url "https://downloads.sourceforge.net/project/nsis/NSIS%202/2.14/nsis-2.14.zip"
+    sha256 "88195a2a1b1bb65baa8f1efc6e2864ca021ccf95a4fc825c6a9bf354f856eb17"
   end
 
   # v1.2.8 is outdated, but the last version available as compiled DLL
