@@ -1,6 +1,6 @@
 os:
 - osx
-script: for file in ./Formula/*.rb; do echo "Auditing $file"; brew audit --strict $file; done
+script: for file in ./Formula/*.rb; do echo "==> brew audit $file --online"; brew audit $file --online; done
 git:
   depth: 1
 branches:
