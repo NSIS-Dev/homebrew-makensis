@@ -61,7 +61,7 @@ const createManifest = async (version) => {
   }
 };
 
-const allVersions = [...versions.stable.v2, ...versions.prerelease.v3, ...versions.stable.v3];
+const allVersions = [...versions.prerelease.v3, ...versions.stable.v3];
 
 // All versions
 allVersions.forEach( version => {
