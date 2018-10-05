@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node util/build.js",
     "precommit": "npm run test",
-    "test": "npx ava ./util/test.js --verbose"
+    "test": "eslint ./util/build.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,6 @@
   "homepage": "https://github.com/NSIS-Dev/homebrew-nsis#readme",
   "dependencies": {},
   "devDependencies": {
-    "ava": "^0.25.0",
     "download": "^7.1.0",
     "ejs": "^2.6.1",
     "es6-promise": "^4.2.4",
