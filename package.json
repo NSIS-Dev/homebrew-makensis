@@ -1,0 +1,34 @@
+{
+  "name": "homebrew-nsis",
+  "version": "0.0.0",
+  "description": "NSIS formluas for `brew`",
+  "private": true,
+  "scripts": {
+    "build": "node util/build.js",
+    "precommit": "npm run test",
+    "test": "npx ava ./util/test.js --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NSIS-Dev/homebrew-nsis.git"
+  },
+  "keywords": [],
+  "author": "Jan T. sott",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NSIS-Dev/homebrew-nsis/issues"
+  },
+  "homepage": "https://github.com/NSIS-Dev/homebrew-nsis#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "download": "^7.1.0",
+    "ejs": "^2.6.1",
+    "es6-promise": "^4.2.4",
+    "eslint": "^5.4.0",
+    "hasha": "^3.0.0",
+    "husky": "^0.14.3",
+    "isomorphic-fetch": "^2.2.1",
+    "log-symbols": "^2.2.0"
+  }
+}
