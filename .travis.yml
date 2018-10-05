@@ -1,6 +1,7 @@
 sudo: true
 os:
 - osx
+language: ruby
 script: for i in ./Formula/*.rb; do brew audit --strict --debug $i; done
 git:
   depth: 1
