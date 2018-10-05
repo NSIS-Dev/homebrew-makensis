@@ -48,8 +48,8 @@ const createManifest = async (version) => {
     blob = await download(bzUrl);
     data.hashBzip2 = getHash(blob);
 
-    template(`Aliases/nsis@${data.version}.rb`, data);
-    template(`Formula/makensis@${data.version}.rb`, data);
+    template(`Formula/nsis@${data.version}.rb`, data);
+    template(`Aliases/makensis@${data.version}.rb`, data);
   } catch(error) {
     if (error.statusMessage) {
       if (error.statusMessage === 'Too Many Requests') {
