@@ -1,7 +1,7 @@
 class NsisAT30rc1 < Formula
   desc "System to create Windows installers"
   homepage "https://nsis.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/nsis/NSIS%203/3.0rc1/nsis-3.0rc1-src.tar.bz2"
+  url "https://downloads.sourceforge.net/project/nsis/NSIS%203%20Pre-release/3.0rc1/nsis-3.0rc1-src.tar.bz2"
   sha256 "4e2a98c96f470386f41dcc7fd3163935228f8833d6accd0884aa0f4cb960b232"
 
   bottle do
@@ -24,7 +24,7 @@ class NsisAT30rc1 < Formula
   depends_on "scons" => :build
 
   resource "nsis" do
-    url "https://downloads.sourceforge.net/project/nsis/NSIS%203/3.0rc1/nsis-3.0rc1.zip"
+    url "https://downloads.sourceforge.net/project/nsis/NSIS%203%20Pre-release/3.0rc1/nsis-3.0rc1.zip"
     sha256 "d9ae82c7ace44dd265f1081861287a5565c742448e0460386b165b54c6465694"
   end
 

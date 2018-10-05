@@ -35,10 +35,10 @@ const createManifest = async (version) => {
   data.version = version;
   data.versionMajor = version[0];
   data.versionNoDot = version.replace(/\./g, '');
+  data.directory = (/\d(a|b|rc)\d*$/.test(data.version) === true) ? `NSIS%20${data.versionMajor}%20Pre-release` : `NSIS%20${data.versionMajor}`;
 
-  const directory = (/\d(a|b|rc)\d*$/.test(version) === true) ? `NSIS%20${data.versionMajor}%20Pre-release` : `NSIS%20${data.versionMajor}`;
-  const zipUrl = `https://downloads.sourceforge.net/project/nsis/${directory}/${data.version}/nsis-${data.version}.zip`;
-  const bzUrl = `https://downloads.sourceforge.net/project/nsis/${directory}/${data.version}/nsis-${data.version}-src.tar.bz2`;
+  const zipUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}.zip`;
+  const bzUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}-src.tar.bz2`;
 
   try {
     blob = await download(zipUrl);
