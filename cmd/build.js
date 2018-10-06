@@ -4,7 +4,7 @@ const ejs = require('ejs');
 const hasha = require('hasha');
 const symbol = require('log-symbols');
 const { join } = require('path');
-const versions = require('./versions.json');
+const versions = require('./data/versions.json');
 const { writeFile } = require('fs');
 
 let getHash = (blob) => {
@@ -16,7 +16,7 @@ let getHash = (blob) => {
 let template = (outFile, data) => {
   data.classPrefix = (outFile.startsWith('Aliases/')) ? 'Nsis' : 'Makensis';
 
-  ejs.renderFile(join(__dirname, '/formula.ejs'), data, function(err, contents) {
+  ejs.renderFile(join(__dirname, `/data/formula-v${data.versionMajor}.ejs`), data, function(err, contents) {
     if (err) {
       console.error(symbol.error, err);
       return;
@@ -62,7 +62,7 @@ const createManifest = async (version) => {
   }
 };
 
-const allVersions = [...versions.stable.v3];
+const allVersions = [...versions.stable.v2, ...versions.stable.v3];
 
 // All versions
 allVersions.forEach( version => {
