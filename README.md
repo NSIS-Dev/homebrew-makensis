@@ -50,3 +50,7 @@ Build makensis so installers can handle [large strings](https://nsis.sourceforge
 #### `with-debug`
 
 Build makensis so installers can handle [large strings](https://nsis.sourceforge.io/Special_Builds#Large_strings) (>1024 characters)
+
+## License
+
+This work is licensed under the [BSD 2-Clause License](LICENSE)
