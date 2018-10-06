@@ -11,7 +11,7 @@ Homebrew tap for Nullsoft Scriptable Install System (NSIS)
 
 ## Prerequisites
 
-Make sure that [Homebrew](https://brew.sh/) is installed with `brew` in your PATH environmental variable
+Make sure that [Homebrew](https://brew.sh/) is installed with `brew` in your `PATH` environmental variable
 
 ## Installation
 
@@ -23,7 +23,7 @@ $ brew tap nsis-dev/makensis
 
 ## Usage
 
-You can now install any version of `makensis` between 2.34 and the latest using the command `brew install makensis@<version>` comm
+You can now install any version of `makensis` between 2.34 and the latest using the command `brew install makensis@<version>`
 
 ```sh
 $ brew install makensis@3.03
