@@ -11,7 +11,7 @@ Homebrew tap for Nullsoft Scriptable Install System (NSIS)
 
 ## Prerequisites
 
-Make sure that [Homebrew](https://brew.sh/) is installed with `brew` in your `PATH environmental variable
+Make sure that [Homebrew](https://brew.sh/) is installed with `brew` in your `PATH` environmental variable
 
 ## Installation
 
