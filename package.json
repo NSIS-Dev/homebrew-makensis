@@ -5,8 +5,10 @@
   "private": true,
   "scripts": {
     "build": "node cmd/build.js",
+    "ejslint": "ejslint ./cmd/**/*.ejs",
+    "eslint": "eslint ./cmd/**/*.js",
     "precommit": "npm run test",
-    "test": "eslint ./cmd/build.js"
+    "test": "npm run eslint && npm run ejslint"
   },
   "repository": {
     "type": "git",
@@ -23,10 +25,11 @@
   "devDependencies": {
     "download": "^7.1.0",
     "ejs": "^2.6.1",
+    "ejs-lint": "^0.3.0",
     "es6-promise": "^4.2.4",
     "eslint": "^5.4.0",
     "hasha": "^3.0.0",
-    "husky": "^0.14.3",
+    "husky": "^1.1.1",
     "isomorphic-fetch": "^2.2.1",
     "log-symbols": "^2.2.0"
   }
