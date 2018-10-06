@@ -1,8 +1,8 @@
-class MakensisAT3021 < Formula
+class MakensisAT238 < Formula
   desc "System to create Windows installers"
   homepage "https://nsis.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/nsis/NSIS%203/3.02.1/nsis-3.02.1-src.tar.bz2"
-  sha256 "5f6d135362c70f6305317b3af6d8398184ac1a22d3f23b9c4164543c13fb8d60"
+  url "https://downloads.sourceforge.net/project/nsis/NSIS%202/2.38/nsis-2.38-src.tar.bz2"
+  sha256 "1493ea75ebacfd92066b8fb8f495d9c422a642953b92d08108bf9da8a5c047f3"
 
   bottle do
     cellar :any_skip_relocation
@@ -16,18 +16,25 @@ class MakensisAT3021 < Formula
   option "with-large-strings", "Enable strings up to 8192 characters instead of default 1024"
   option "with-debug", "Build executables with debugging information"
 
-  depends_on "mingw-w64" => :build
   depends_on "scons" => :build
 
   resource "nsis" do
-    url "https://downloads.sourceforge.net/project/nsis/NSIS%203/3.02.1/nsis-3.02.1.zip"
-    sha256 "deef3e3d90ab1a9e0ef294fff85eead25edbcb429344ad42fc9bc42b5c3b1fb5"
+    url "https://downloads.sourceforge.net/project/nsis/NSIS%202/2.38/nsis-2.38.zip"
+    sha256 "82ef0aa78bfbf482ed691cab5af47cb16085614e7fe7a319acf36071f1a2603e"
   end
 
+  # scons appears to have no builtin way to override the compiler selection,
+  # and the only options supported on OS X are 'gcc' and 'g++'.
+  # Use the right compiler by forcibly altering the scons config to set these
+  patch :DATA
+
   def install
+    # makensis fails to build under libc++; since it's just a binary with
+    # no Homebrew dependencies, we can just use libstdc++
+    # https://sourceforge.net/p/nsis/bugs/1085/
+    ENV.libstdcxx if ENV.compiler == :clang
+
     args = [
-      "CC=#{ENV.cc}",
-      "CXX=#{ENV.cxx}",
       "PREFIX_DOC=#{share}/nsis/Docs",
       "SKIPUTILS=Makensisw,NSIS Menu,zip2exe",
       # Don't strip, see https://github.com/Homebrew/homebrew/issues/28718
@@ -40,7 +47,7 @@ class MakensisAT3021 < Formula
     args << "DEBUG=1" if build.with? "debug"
 
     scons "makensis", *args
-    bin.install "build/urelease/makensis/makensis"
+    bin.install "build/release/makensis/makensis"
     (share/"nsis").install resource("nsis")
   end
 
@@ -50,3 +57,24 @@ class MakensisAT3021 < Formula
     system "#{bin}/makensis", "#{share}/nsis/Examples/bigtest.nsi", "-XOutfile /dev/null"
   end
 end
+
+__END__
+diff --git a/SCons/config.py b/SCons/config.py
+index a344456..37c575b 100755
+--- a/SCons/config.py
++++ b/SCons/config.py
+@@ -1,3 +1,5 @@
++import os
++
+ Import('defenv')
+
+ ### Configuration options
+@@ -440,6 +442,9 @@ Help(cfg.GenerateHelpText(defenv))
+ env = Environment()
+ cfg.Update(env)
+
++defenv['CC'] = os.environ['CC']
++defenv['CXX'] = os.environ['CXX']
++
+ def AddValuedDefine(define):
+   defenv.Append(NSIS_CPPDEFINES = [(define, env[define])])

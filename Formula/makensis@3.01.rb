@@ -12,12 +12,8 @@ class MakensisAT301 < Formula
     sha256 "f4516cec938568eb2bea2b162247a10cbd68dedd85c439f5d77170dbc7c5b81b" => :el_capitan
   end
 
-  # See https://nsis.sourceforge.io/Special_Builds#Advanced_logging
   option "with-advanced-logging", "Enable advanced logging of all installer actions"
-
-  # See https://nsis.sourceforge.io/Special_Builds#Large_strings
   option "with-large-strings", "Enable strings up to 8192 characters instead of default 1024"
-
   option "with-debug", "Build executables with debugging information"
 
   depends_on "mingw-w64" => :build
