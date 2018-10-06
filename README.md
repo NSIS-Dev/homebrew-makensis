@@ -50,7 +50,9 @@ Build makensis so installers can handle [large strings](https://nsis.sourceforge
 
 #### `with-debug`
 
-Build executables with debugging information. **Note:** This is not meant for use in production!
+Build executables with debugging information.
+
+**Note:** This is not meant for use in production!
 
 ## License
 
