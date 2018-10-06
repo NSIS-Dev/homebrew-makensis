@@ -1,7 +1,7 @@
 {
-  "name": "homebrew-nsis",
+  "name": "homebrew-makensis",
   "version": "0.0.0",
-  "description": "NSIS formluas for `brew`",
+  "description": "NSIS formulae for Homebrfew",
   "private": true,
   "scripts": {
     "build": "node cmd/build.js",
@@ -12,15 +12,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NSIS-Dev/homebrew-nsis.git"
+    "url": "git+https://github.com/NSIS-Dev/homebrew-makensis.git"
   },
-  "keywords": [],
+  "keywords": [
+    "nsis",
+    "brew",
+    "homebrew",
+    "homebrew formula"
+    "homebrew formulae"
+  ],
   "author": "Jan T. sott",
-  "license": "ISC",
+  "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/NSIS-Dev/homebrew-nsis/issues"
+    "url": "https://github.com/NSIS-Dev/homebrew-makensis/issues"
   },
-  "homepage": "https://github.com/NSIS-Dev/homebrew-nsis#readme",
+  "homepage": "https://github.com/NSIS-Dev/homebrew-makensis#readme",
   "dependencies": {},
   "devDependencies": {
     "download": "^7.1.0",
