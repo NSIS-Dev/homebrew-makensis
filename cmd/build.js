@@ -16,7 +16,7 @@ let getHash = (blob) => {
 let template = (outFile, data) => {
   data.classPrefix = (outFile.startsWith('Aliases/')) ? 'Nsis' : 'Makensis';
 
-  ejs.renderFile(join(__dirname, `/data/formula-v${data.versionMajor}.ejs`), data, function(err, contents) {
+  ejs.renderFile(join(__dirname, `/data/nsis@${data.versionMajor}.ejs`), data, function(err, contents) {
     if (err) {
       console.error(symbol.error, err);
       return;
