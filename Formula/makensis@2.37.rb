@@ -46,7 +46,7 @@ class MakensisAT237 < Formula
     args << "NSIS_MAX_STRLEN=8192" if build.with? "large-strings"
     args << "DEBUG=1" if build.with? "debug"
 
-    scons "makensis", *args
+    system "scons", "makensis", *args
     bin.install "build/release/makensis/makensis"
     (share/"nsis").install resource("nsis")
   end
