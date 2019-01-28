@@ -1,11 +1,21 @@
 os:
 - osx
+
 script: $FORMULAE="";for file in ./Formula/*.rb; do echo "Testing $file"; $FORMULAE<<"$file & ";done;$FORMULAE<<wait;brew audit $FORMULAE --online;
+
 git:
   depth: 1
+
 branches:
   only:
   - master
+
+before_cache:
+  - brew cleanup
+
 cache:
+  directories:
+    - $HOME/Library/Caches/Homebrew
+
 notifications:
   email: false
