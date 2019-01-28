@@ -40,15 +40,15 @@ $ brew link makensis@2.51
 
 The support for build options was removed from the Homebrew core repository in [#87c4a30](https://github.com/Homebrew/homebrew-core/pull/31891/commits/87c4a30a90632a4a996633f1b25f85ec5efb25d7) on October 2nd, 2018. You can continue to use them using this tap.
 
-#### `with-advanced-logging`
+#### `--with-advanced-logging`
 
 Enable [advanced logging](https://nsis.sourceforge.io/Special_Builds#Advanced_logging) of all installer actions
 
-#### `with-large-strings`
+#### `--with-large-strings`
 
 Build makensis so installers can handle [large strings](https://nsis.sourceforge.io/Special_Builds#Large_strings) (>1024 characters)
 
-#### `with-debug`
+#### `--with-debug`
 
 Build executables with debugging information.
 
