@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Upgrade Homebrew
+          command: brew update && brew upgrade
+      - run:
+          name: Run Homebrew Audit
+          command: for file in ./Formula/*.rb; do echo "Testing $file"; brew audit $file --online; done
