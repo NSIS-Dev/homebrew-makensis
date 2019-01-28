@@ -7,6 +7,10 @@ git:
 branches:
   only:
   - master
+before_cache:
+  - brew cleanup
 cache:
+  directories:
+    - $HOME/Library/Caches/Homebrew
 notifications:
   email: false
