@@ -7,7 +7,7 @@
 
 Homebrew tap for Nullsoft Scriptable Install System (NSIS)
 
-**Note:** The Homebrew core repository already supports NSIS. This tap repository is meant to allow the installation of older versions and to build `makensis` with [options](#options]
+**Note:** The Homebrew core repository already supports NSIS. This tap repository is meant to allow the installation of older versions and to build `makensis` with [options](#options)
 
 ## Prerequisites
 
