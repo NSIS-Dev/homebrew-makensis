@@ -7,7 +7,7 @@
 
 Homebrew tap for Nullsoft Scriptable Install System (NSIS)
 
-**Note:** The Homebrew core repository already supports NSIS. This tap repository is meant to allow the installation of older versions and to build `makensis` with options (which were [removed](https://github.com/Homebrew/homebrew-core/pull/31891) from core)
+**Note:** The Homebrew core repository already supports NSIS. This tap repository is meant to allow the installation of older versions and to build `makensis` with [options](#options]
 
 ## Prerequisites
 
@@ -42,7 +42,7 @@ $ brew link makensis@2.51
 
 ### Options
 
-The support for build options was removed from the Homebrew core repository in [#87c4a30](https://github.com/Homebrew/homebrew-core/pull/31891/commits/87c4a30a90632a4a996633f1b25f85ec5efb25d7) on October 2nd, 2018. You can continue to use them using this tap.
+The support for build options was removed from the Homebrew core repository in [#31891](https://github.com/Homebrew/homebrew-core/pull/31891) on October 2nd, 2018. You can continue to use them using this tap.
 
 #### `--with-advanced-logging`
 
