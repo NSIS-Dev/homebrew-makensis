@@ -25,12 +25,16 @@ $ brew tap nsis-dev/makensis
 
 You can now install any version of `makensis` between 2.34 and the latest using the command `brew install makensis@<version>`
 
+**Example:**
+
 ```sh
 $ brew install makensis@3.03
 $ brew install makensis@2.51
 ```
 
 To switch between installed versions, use the  command `brew link makensis@<version>`
+
+**Example:**
 
 ```sh
 $ brew link makensis@2.51
