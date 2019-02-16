@@ -30,7 +30,7 @@ $ brew install makensis@3.03
 $ brew install makensis@2.51
 ```
 
-To switch between versions, use the  command `brew link makensis@<version>`
+To switch between installed versions, use the  command `brew link makensis@<version>`
 
 ```sh
 $ brew link makensis@2.51
