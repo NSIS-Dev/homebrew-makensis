@@ -42,7 +42,7 @@ $ brew link makensis@2.51
 
 ### Options
 
-The support for build options was removed from the Homebrew core repository in [#31891](https://github.com/Homebrew/homebrew-core/pull/31891) on October 2nd, 2018. You can continue to use them using this tap.
+The support for NSIS build options was removed from the Homebrew core repository in [#31891] as part of the effort to [remove options](https://github.com/Homebrew/homebrew-core/issues/31510) from all core formulae. You can continue to use them using this tap.
 
 #### `--with-advanced-logging`
 
