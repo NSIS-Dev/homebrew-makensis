@@ -7,6 +7,13 @@ const { join } = require('path');
 const versions = require('./data/versions.json');
 const { writeFile } = require('fs');
 
+// via https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
+
 let getHash = (blob) => {
   const hash = hasha(blob, {algorithm: 'sha256'});
 
@@ -65,6 +72,7 @@ const createManifest = async (version) => {
 const allVersions = [...versions.stable.v2, ...versions.stable.v3];
 
 // All versions
-allVersions.forEach( version => {
-  createManifest(version);
+asyncForEach(allVersions, async key => {
+  const value = versions.stable[key];
+  await createManifest(key, value);
 });
