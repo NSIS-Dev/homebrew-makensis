@@ -7,8 +7,8 @@
     "build": "node cmd/build.js",
     "ejslint": "ejslint ./cmd/**/*.ejs",
     "eslint": "eslint ./cmd/**/*.js",
-    "precommit": "npm run test",
-    "test": "npm run eslint && npm run ejslint"
+    "lint": "concurrently \"npm run eslint\" \"npm run ejslint\"",
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -29,14 +29,20 @@
   "homepage": "https://github.com/NSIS-Dev/homebrew-makensis#readme",
   "dependencies": {},
   "devDependencies": {
+    "concurrently": "^5.1.0",
     "download": "^7.1.0",
-    "ejs": "^2.6.1",
-    "ejs-lint": "^0.3.0",
-    "es6-promise": "^4.2.4",
-    "eslint": "^5.4.0",
-    "hasha": "^3.0.0",
-    "husky": "^1.1.1",
+    "ejs": "^3.0.1",
+    "ejs-lint": "^1.0.1",
+    "es6-promise": "^4.2.8",
+    "eslint": "^6.8.0",
+    "hasha": "^5.1.0",
+    "husky": "^4.2.1",
     "isomorphic-fetch": "^2.2.1",
-    "log-symbols": "^2.2.0"
+    "log-symbols": "^3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test"
+    }
   }
 }
