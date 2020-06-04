@@ -23,7 +23,7 @@ $ brew tap nsis-dev/makensis
 
 ## Usage
 
-You can now install any version of `makensis` between 2.34 and the latest using the command `brew install makensis@<version>`
+You can now install any version of `makensis` between 2.34 and the latest using the command `brew install makensis@<version>`.
 
 **Example:**
 
@@ -32,7 +32,9 @@ $ brew install makensis@3.03
 $ brew install makensis@2.51
 ```
 
-To switch between installed versions, use the  command `brew link makensis@<version>`
+To switch between installed versions, use the command `brew link makensis@<version>`
+
+**Note:** If you run `brew install makensis`, it will _not_ install the latest version from this tap, but it will install the stock one from the official Brew repos.
 
 **Example:**
 
@@ -43,6 +45,8 @@ $ brew link makensis@2.51
 ### Options
 
 The support for NSIS build options was removed from the Homebrew core repository in [#31891](https://github.com/Homebrew/homebrew-core/pull/31891) as part of the effort to [remove options](https://github.com/Homebrew/homebrew-core/issues/31510) from all core formulae. You can continue to use them using this tap.
+
+**Note**: You need to specify the version explicitly when using these options, e.g. `brew install makensis@3.05 --with-advanced-logging --with-large-strings`.
 
 #### `--with-advanced-logging`
 
