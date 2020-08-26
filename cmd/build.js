@@ -5,7 +5,7 @@ const hasha = require('hasha');
 const symbol = require('log-symbols');
 const { join } = require('path');
 const versions = require('./data/versions.json');
-const { writeFile } = require('fs');
+const fs = require('fs').promises;
 
 // via https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
 async function asyncForEach(array, callback) {
@@ -14,27 +14,27 @@ async function asyncForEach(array, callback) {
   }
 }
 
-let getHash = (blob) => {
+function getHash(blob) {
   const hash = hasha(blob, {algorithm: 'sha256'});
 
   return hash;
-};
+}
 
-let template = (outFile, data) => {
+async function template(outFile, data) {
   data.classPrefix = (outFile.startsWith('Aliases/')) ? 'Nsis' : 'Makensis';
 
-  ejs.renderFile(join(__dirname, `/data/nsis@${data.versionMajor}.ejs`), data, function(err, contents) {
+  ejs.renderFile(join(__dirname, `/data/nsis@${data.versionMajor}.ejs`), data, async (err, contents) => {
     if (err) {
       console.error(symbol.error, err);
       return;
     }
 
-    writeFile(outFile, contents, (err) => {
+    await fs.writeFile(outFile, contents, (err) => {
       if (err) throw err;
       console.log(symbol.success, `Saved: ${outFile}`);
     });
   });
-};
+}
 
 const createManifest = async (version) => {
   let data = {};
@@ -55,7 +55,8 @@ const createManifest = async (version) => {
     blob = await download(bzUrl);
     data.hashBzip2 = getHash(blob);
 
-    template(`Formula/makensis@${data.version}.rb`, data);
+    await template(`Formula/makensis@${data.version}.rb`, data);
+    await fs.symlink(`Formula/makensis@${data.version}.rb`,`Aliases/nsis@${data.version}.rb`);
   } catch(error) {
     if (error.statusMessage) {
       if (error.statusMessage === 'Too Many Requests') {
@@ -65,6 +66,7 @@ const createManifest = async (version) => {
     } else if (error.code === 'ENOENT') {
       return console.log('Skipping Test: Manifest Not Found');
     }
+
     console.error(symbol.error, error);
   }
 };
