@@ -29,10 +29,9 @@ async function template(outFile, data) {
       return;
     }
 
-    await fs.writeFile(outFile, contents, (err) => {
-      if (err) throw err;
-      console.log(symbol.success, `Saved: ${outFile}`);
-    });
+    await fs.writeFile(outFile, contents);
+
+    console.log(symbol.success, `Saved: ${outFile}`);
   });
 }
 
@@ -56,7 +55,6 @@ const createManifest = async (version) => {
     data.hashBzip2 = getHash(blob);
 
     await template(`Formula/makensis@${data.version}.rb`, data);
-    await fs.symlink(`Formula/makensis@${data.version}.rb`,`Aliases/nsis@${data.version}.rb`);
   } catch(error) {
     if (error.statusMessage) {
       if (error.statusMessage === 'Too Many Requests') {
@@ -68,6 +66,12 @@ const createManifest = async (version) => {
     }
 
     console.error(symbol.error, error);
+  }
+
+  try {
+    await fs.symlink(`Formula/makensis@${data.version}.rb`, `Aliases/nsis@${data.version}.rb`);
+  } catch (error) {
+    console.error(symbol.warning, `Skipping Aliases/nsis@${data.version}.rb`);
   }
 };
 
