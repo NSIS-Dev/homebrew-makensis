@@ -1,1 +1,1 @@
-Formula/makensis@3.01.rb
+../Formula/makensis@3.01.rb
