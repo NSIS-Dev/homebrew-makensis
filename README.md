@@ -40,6 +40,8 @@ To switch between installed versions, use the  command `brew link makensis@<vers
 $ brew link makensis@2.51
 ```
 
+**Note:** Some older formulas might no longer build on newer versions of Homebrew. If you're aware of fixes or workarounds, please submit a PR.
+
 ### Options
 
 The support for NSIS build options was removed from the Homebrew core repository in [#31891](https://github.com/Homebrew/homebrew-core/pull/31891) as part of the effort to [remove options](https://github.com/Homebrew/homebrew-core/issues/31510) from all core formulae. You can continue to use them using this tap.
