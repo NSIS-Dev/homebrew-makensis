@@ -69,9 +69,10 @@ const createManifest = async (version) => {
   }
 
   try {
-    await fs.symlink(`Formula/makensis@${data.version}.rb`, `Aliases/nsis@${data.version}.rb`);
+    await fs.symlink(`../Formula/makensis@${data.version}.rb`, `Aliases/nsis@${data.version}.rb`);
+    console.log(symbol.success, `Saved: Aliases/nsis@${data.version}.rb`);
   } catch (error) {
-    console.error(symbol.warning, `Skipping Aliases/nsis@${data.version}.rb`);
+    console.error(symbol.warning, `Skipping: Aliases/nsis@${data.version}.rb`);
   }
 };
 
