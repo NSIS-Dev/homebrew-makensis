@@ -4,7 +4,7 @@ os:
 - osx
 
 before_script: brew update
-script: for file in ./Formula/*.rb; do echo "Testing $file"; brew audit $file --online; done
+script: for file in ./Formula/*.rb; do echo "Testing $file"; brew audit $file --online; timeout /t 10; done
 
 git:
   depth: 1
