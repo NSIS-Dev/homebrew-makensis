@@ -45,12 +45,14 @@ class MakensisAT238 < Formula
     args << "DEBUG=1" if build.with? "debug"
 
     system "scons", "makensis", *args
+
     if build.with? "debug"
-      bin.install "build/udebug/makensis/makensis"
+      install_path = "build/udebug/makensis/makensis"
     else
-      bin.install "build/urelease/makensis/makensis"
+      install_path = "build/urelease/makensis/makensis"
     end
-    (share/"nsis").install resource("nsis")
+
+    bin.install install_path
   end
 
   test do
