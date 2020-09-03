@@ -53,6 +53,7 @@ class MakensisAT244 < Formula
     end
 
     bin.install install_path
+    (share/"nsis").install resource("nsis")
   end
 
   test do

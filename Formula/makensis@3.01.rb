@@ -45,11 +45,12 @@ class MakensisAT301 < Formula
     system "scons", "makensis", *args
 
     if build.with? "debug"
-      bin.install "build/udebug/makensis/makensis"
+      install_path = "build/udebug/makensis/makensis"
     else
-      bin.install "build/urelease/makensis/makensis"
+      install_path = "build/urelease/makensis/makensis"
     end
-    
+
+    bin.install install_path
     (share/"nsis").install resource("nsis")
   end
 
