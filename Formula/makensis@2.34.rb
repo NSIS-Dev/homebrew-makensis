@@ -45,8 +45,11 @@ class MakensisAT234 < Formula
     args << "DEBUG=1" if build.with? "debug"
 
     system "scons", "makensis", *args
-    channel = "debug" if build.with? "debug" else "release"
-    bin.install "build/u#{channel}/makensis/makensis"
+    if build.with? "debug"
+      bin.install "build/udebug/makensis/makensis"
+    else
+      bin.install "build/urelease/makensis/makensis"
+    end
     (share/"nsis").install resource("nsis")
   end
 
