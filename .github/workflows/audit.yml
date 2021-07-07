@@ -1,0 +1,16 @@
+name: Audit Formulas
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - name: Update Homebrew
+      run: brew update
+
+    - name: Audit Formulas
+      run:  for file in ./Formula/*.rb; do echo "Testing $file"; brew audit $file --online; done
