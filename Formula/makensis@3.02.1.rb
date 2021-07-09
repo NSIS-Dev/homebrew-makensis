@@ -44,10 +44,10 @@ class MakensisAT3021 < Formula
 
     system "scons", "makensis", *args
 
-    if build.with? "debug"
-      install_path = "build/udebug/makensis/makensis"
+    install_path = if build.with? "debug"
+      "build/udebug/makensis/makensis"
     else
-      install_path = "build/urelease/makensis/makensis"
+      "build/urelease/makensis/makensis"
     end
 
     bin.install install_path
