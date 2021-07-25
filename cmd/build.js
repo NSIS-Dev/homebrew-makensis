@@ -42,7 +42,6 @@ async function template(outFile, data) {
 
 const createManifest = async (version) => {
   let data = {};
-  let blob;
 
   data.version = version;
   data.versionMajor = version[0];
@@ -53,11 +52,11 @@ const createManifest = async (version) => {
   const bzUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}-src.tar.bz2`;
 
   try {
-    blob = (await fetch(zipUrl)).arrayBuffer();
-    data.hashZip = await getHash(blob);
+    const responseZip = await fetch(zipUrl);
+    data.hashZip = await getHash(await responseZip.arrayBuffer());
 
-    blob = (await fetch(bzUrl)).arrayBuffer();
-    data.hashBzip2 = await getHash(blob);
+    const responseBzip = await fetch(bzUrl);
+    data.hashBzip2 = await getHash(await responseBzip.arrayBuffer());
 
     await template(`Formula/makensis@${data.version}.rb`, data);
   } catch(error) {
