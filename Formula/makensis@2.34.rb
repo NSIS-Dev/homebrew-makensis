@@ -2,7 +2,7 @@ class MakensisAT234 < Formula
   desc "System to create Windows installers"
   homepage "https://nsis.sourceforge.io/"
   url "https://downloads.sourceforge.net/project/nsis/NSIS%202/2.34/nsis-2.34-src.tar.bz2"
-  sha256 "95de9f479311532a0e5e933c67fa6c32eb63a4aae4b486aea9c7be49f8295d60"
+  sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   license "Zlib"
 
   bottle do
@@ -22,7 +22,7 @@ class MakensisAT234 < Formula
 
   resource "nsis" do
     url "https://downloads.sourceforge.net/project/nsis/NSIS%202/2.34/nsis-2.34.zip"
-    sha256 "e9fdf66c7aedd3268bd3127d894be79ee41e2570509c47696bd770e666bed769"
+    sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   end
 
   # scons appears to have no builtin way to override the compiler selection,

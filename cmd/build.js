@@ -1,11 +1,15 @@
 // Dependencies
-const download = require('download');
-const ejs = require('ejs');
-const hasha = require('hasha');
-const symbol = require('log-symbols');
 const { join } = require('path');
+const ejs = require('ejs');
+const fs = require('fs/promises');
+const hash = require('hash-wasm');
+const MFH = require('make-fetch-happen');
+const symbol = require('log-symbols');
 const versions = require('./data/versions.json');
-const fs = require('fs').promises;
+
+const fetch = MFH.defaults({
+  cacheManager: '.cache'
+});
 
 // via https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
 async function asyncForEach(array, callback) {
@@ -14,10 +18,11 @@ async function asyncForEach(array, callback) {
   }
 }
 
-function getHash(blob) {
-  const hash = hasha(blob, {algorithm: 'sha256'});
+async function getHash(blob) {
+  const data = new Uint8Array(blob);
+  const checksum = await hash.sha256(data);
 
-  return hash;
+  return checksum;
 }
 
 async function template(outFile, data) {
@@ -48,11 +53,11 @@ const createManifest = async (version) => {
   const bzUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}-src.tar.bz2`;
 
   try {
-    blob = await download(zipUrl);
-    data.hashZip = getHash(blob);
+    blob = (await fetch(zipUrl)).arrayBuffer();
+    data.hashZip = await getHash(blob);
 
-    blob = await download(bzUrl);
-    data.hashBzip2 = getHash(blob);
+    blob = (await fetch(bzUrl)).arrayBuffer();
+    data.hashBzip2 = await getHash(blob);
 
     await template(`Formula/makensis@${data.version}.rb`, data);
   } catch(error) {
