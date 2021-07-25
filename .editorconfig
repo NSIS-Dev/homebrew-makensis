@@ -1,13 +1,13 @@
 [*]
 charset = utf-8
 
-[*.{js,json,ts,yml}]
+[*.{js,json,mjs,ts,yml}]
 indent_size = 2
 indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{js,ts}]
+[*.{js,mjs,ts}]
 block_comment_start = /*
 block_comment = *
 block_comment_end = */

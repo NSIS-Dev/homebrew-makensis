@@ -1,15 +1,17 @@
 // Dependencies
-const { join } = require('path');
-const ejs = require('ejs');
-const fs = require('fs/promises');
-const hash = require('hash-wasm');
-const MFH = require('make-fetch-happen');
-const symbol = require('log-symbols');
-const versions = require('./data/versions.json');
+import MFH from 'make-fetch-happen';
+import logSymbols from 'log-symbols';
+import { renderFile } from 'ejs';
+import { sha256 } from 'hash-wasm';
+import { stable } from './data/versions.mjs';
+import { writeFile, symlink } from 'fs/promises';
+import path from 'path';
 
 const fetch = MFH.defaults({
   cacheManager: '.cache'
 });
+
+const __dirname = path.resolve(path.dirname(''));
 
 // via https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
 async function asyncForEach(array, callback) {
@@ -20,7 +22,7 @@ async function asyncForEach(array, callback) {
 
 async function getHash(blob) {
   const data = new Uint8Array(blob);
-  const checksum = await hash.sha256(data);
+  const checksum = await sha256(data);
 
   return checksum;
 }
@@ -28,15 +30,15 @@ async function getHash(blob) {
 async function template(outFile, data) {
   data.classPrefix = (outFile.startsWith('Aliases/')) ? 'Nsis' : 'Makensis';
 
-  ejs.renderFile(join(__dirname, `/data/nsis@${data.versionMajor}.ejs`), data, async (err, contents) => {
+  renderFile(path.join(__dirname, `cmd/data/nsis@${data.versionMajor}.ejs`), data, async (err, contents) => {
     if (err) {
-      console.error(symbol.error, err);
+      console.error(logSymbols.error, err);
       return;
     }
 
-    await fs.writeFile(outFile, contents);
+    await writeFile(outFile, contents);
 
-    console.log(symbol.success, `Saved: ${outFile}`);
+    console.log(logSymbols.success, `Saved: ${outFile}`);
   });
 }
 
@@ -62,28 +64,28 @@ const createManifest = async (version) => {
   } catch(error) {
     if (error.statusMessage) {
       if (error.statusMessage === 'Too Many Requests') {
-        return console.warn(symbol.warning, `${error.statusMessage}: nsis-${version}.zip`);
+        return console.warn(logSymbols.warning, `${error.statusMessage}: nsis-${version}.zip`);
       }
-      return console.error(symbol.error, `${error.statusMessage}: nsis-${version}.zip`);
+      return console.error(logSymbols.error, `${error.statusMessage}: nsis-${version}.zip`);
     } else if (error.code === 'ENOENT') {
       return console.log('Skipping Test: Manifest Not Found');
     }
 
-    console.error(symbol.error, error);
+    console.error(logSymbols.error, error);
   }
 
   try {
-    await fs.symlink(`../Formula/makensis@${data.version}.rb`, `Aliases/nsis@${data.version}.rb`);
-    console.log(symbol.success, `Saved: Aliases/nsis@${data.version}.rb`);
+    await symlink(`../Formula/makensis@${data.version}.rb`, `Aliases/nsis@${data.version}.rb`);
+    console.log(logSymbols.success, `Saved: Aliases/nsis@${data.version}.rb`);
   } catch (error) {
-    console.error(symbol.warning, `Skipping: Aliases/nsis@${data.version}.rb`);
+    console.error(logSymbols.warning, `Skipping: Aliases/nsis@${data.version}.rb`);
   }
 };
 
-const allVersions = [...versions.stable.v2, ...versions.stable.v3];
+const allVersions = [...stable.v2, ...stable.v3];
 
 // All versions
 asyncForEach(allVersions, async key => {
-  const value = versions.stable[key];
+  const value = stable[key];
   await createManifest(key, value);
 });

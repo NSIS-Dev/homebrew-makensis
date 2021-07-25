@@ -4,10 +4,10 @@
   "description": "NSIS formulae for Homebrfew",
   "private": true,
   "scripts": {
-    "build": "node cmd/build.js",
-    "fix": "eslint --fix ./cmd/**/*.js",
+    "build": "node cmd/build.mjs",
+    "fix": "eslint --fix ./cmd/**/*.mjs",
     "lint:ejs": "ejslint ./cmd/**/*.ejs",
-    "lint:js": "eslint ./cmd/**/*.js",
+    "lint:js": "eslint ./cmd/**/*.mjs",
     "lint": "npm-run-all --parallel lint:*",
     "test": "npm run lint",
     "prepare": "husky install"
@@ -36,14 +36,13 @@
     "eslint": "^7.7.0",
     "hash-wasm": "^4.9.0",
     "husky": "^7.0.0",
-    "isomorphic-fetch": "^2.2.1",
     "lint-staged": "^11.0.0",
-    "log-symbols": "^4.0.0",
+    "log-symbols": "^5.0.0",
     "make-fetch-happen": "^9.0.4",
     "npm-run-all": "^4.1.5"
   },
   "lint-staged": {
     "*.ejs": "ejslint",
-    "*.js": "eslint --cache --fix"
+    "*.mjs": "eslint --cache --fix"
   }
 }
