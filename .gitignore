@@ -1,3 +1,17 @@
+# Package Managers
+bower_components/
 node_modules/
-shrinkwrap.yaml
+
+# Error Logs
+*npm-debug.log*
+yarn-error.log
 yarn.lock
+
+# Development
+.cache/
+.eslintcache
+
+# Project specific
+*.exe
+*.zip
+todo.md
