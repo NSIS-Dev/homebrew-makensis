@@ -1,8 +1,8 @@
-class MakensisAT251 < Formula
+class MakensisAT307 < Formula
   desc "System to create Windows installers"
   homepage "https://nsis.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/nsis/NSIS%202/2.51/nsis-2.51-src.tar.bz2"
-  sha256 "43d4c9209847e35eb6e2c7cd5a7586e1445374c056c2c7899e40a080e17a1be7"
+  url "https://downloads.sourceforge.net/project/nsis/NSIS%203/3.07/nsis-3.07-src.tar.bz2"
+  sha256 "4dfad3388589985b4cd91d20e18e1458aa31e7d139b5b8adf25c3a9c1015efba"
   license "Zlib"
 
   bottle do
@@ -18,20 +18,18 @@ class MakensisAT251 < Formula
   option "with-large-strings", "Enable strings up to 8192 characters instead of default 1024"
   option "with-debug", "Build executables with debugging information"
 
+  depends_on "mingw-w64" => :build
   depends_on "scons" => :build
 
   resource "nsis" do
-    url "https://downloads.sourceforge.net/project/nsis/NSIS%202/2.51/nsis-2.51.zip"
-    sha256 "43065a52a586166174c87294ae322baef898af8b782019e8a7ffd625f64f8e35"
+    url "https://downloads.sourceforge.net/project/nsis/NSIS%203/3.07/nsis-3.07.zip"
+    sha256 "04dde28896ae9ab36ea3035ff3a294e78053f00048064f6d22a6f1c02bcb6ec0"
   end
-
-  # scons appears to have no builtin way to override the compiler selection,
-  # and the only options supported on OS X are 'gcc' and 'g++'.
-  # Use the right compiler by forcibly altering the scons config to set these
-  patch :DATA
 
   def install
     args = [
+      "CC=#{ENV.cc}",
+      "CXX=#{ENV.cxx}",
       "PREFIX_DOC=#{share}/nsis/Docs",
       "SKIPUTILS=Makensisw,NSIS Menu,zip2exe",
       # Don't strip, see https://github.com/Homebrew/homebrew/issues/28718
@@ -58,27 +56,6 @@ class MakensisAT251 < Formula
   test do
     system "#{bin}/makensis", "-VERSION"
     system "#{bin}/makensis", "-HDRINFO"
-    system "#{bin}/makensis", "#{share}/nsis/Examples/bigtest.nsi", "-XOutfile /dev/null"
+    system "#{bin}/makensis", "-XUnicode false", "#{share}/nsis/Examples/bigtest.nsi", "-XOutfile /dev/null"
   end
 end
-
-__END__
-diff --git a/SCons/config.py b/SCons/config.py
-index a344456..37c575b 100755
---- a/SCons/config.py
-+++ b/SCons/config.py
-@@ -1,3 +1,5 @@
-+import os
-+
- Import('defenv')
-
- ### Configuration options
-@@ -440,6 +442,9 @@ Help(cfg.GenerateHelpText(defenv))
- env = Environment()
- cfg.Update(env)
-
-+defenv['CC'] = os.environ['CC']
-+defenv['CXX'] = os.environ['CXX']
-+
- def AddValuedDefine(define):
-   defenv.Append(NSIS_CPPDEFINES = [(define, env[define])])
