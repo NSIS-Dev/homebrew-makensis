@@ -44,5 +44,8 @@
   "lint-staged": {
     "*.ejs": "ejslint",
     "*.mjs": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "mri": "^1.2.0"
   }
 }
