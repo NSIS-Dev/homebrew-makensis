@@ -1,11 +1,15 @@
 // Dependencies
-import MFH from 'make-fetch-happen';
-import logSymbols from 'log-symbols';
 import { renderFile } from 'ejs';
 import { sha256 } from 'hash-wasm';
 import { stable } from './data/versions.mjs';
 import { writeFile, symlink } from 'fs/promises';
+import logSymbols from 'log-symbols';
+import MFH from 'make-fetch-happen';
+import mri from 'mri';
 import path from 'path';
+
+const argv = process.argv.slice(2);
+const { _: customVersions } = mri(argv);
 
 const fetch = MFH.defaults({
   cacheManager: '.cache'
@@ -82,7 +86,11 @@ const createManifest = async (version) => {
   }
 };
 
-const allVersions = [...stable.v2, ...stable.v3];
+const allVersions = Array.isArray(customVersions) && customVersions.length
+  ? customVersions
+  : [...stable.v2, ...stable.v3];
+
+console.info(logSymbols.info, `Creating ${allVersions.length} ${allVersions.length === 1 ? 'manifest' : 'manifests'}`);
 
 // All versions
 asyncForEach(allVersions, async key => {
