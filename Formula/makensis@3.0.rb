@@ -43,6 +43,7 @@ class MakensisAT30 < Formula
     args << "NSIS_CONFIG_LOG=yes" if build.with? "advanced-logging"
     args << "NSIS_MAX_STRLEN=8192" if build.with? "large-strings"
     args << "DEBUG=1" if build.with? "debug"
+    args << "APPEND_LINKFLAGS=-Wl,-rpath,#{rpath}" if OS.linux?
 
     system "scons", "makensis", *args
 
