@@ -15,9 +15,13 @@ jobs:
         os: [macos-latest, ubuntu-latest]
 
     steps:
-    - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2 # v4.1.1
+    - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
       with:
         fetch-depth: 1
+
+    - name: Install Homebrew
+      if: matrix.os == 'ubuntu-latest'
+      uses: Homebrew/actions/setup-homebrew@master
 
     - name: Update Homebrew
       run: brew update
