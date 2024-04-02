@@ -11,6 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Tap repository
+      run: brew tap nsis-dev/makensis
+
     - name: Update Homebrew
       run: brew update
 
