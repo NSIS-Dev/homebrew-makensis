@@ -7,9 +7,17 @@ on:
 
 jobs:
   audit:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: ['lts/*', '*']
+        os: [macos-latest, ubuntu-latest]
+
     steps:
-    - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+    - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2 # v4.1.1
+      with:
+        fetch-depth: 1
 
     - name: Update Homebrew
       run: brew update
