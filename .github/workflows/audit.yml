@@ -11,11 +11,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Tap repository
-      run: brew tap nsis-dev/makensis
 
     - name: Update Homebrew
       run: brew update
+
+    - name: Tap Repository
+      run: brew tap nsis-dev/makensis
 
     - name: Audit Formulas
       run:  for file in ./Formula/*.rb; do echo "Testing $file"; brew audit NSIS-Dev/makensis/$(basename ${file%.rb}) --online; done
