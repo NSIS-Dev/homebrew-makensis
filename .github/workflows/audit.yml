@@ -15,4 +15,4 @@ jobs:
       run: brew update
 
     - name: Audit Formulas
-      run:  for file in ./Formula/*.rb; do echo "Testing $file"; brew audit $file --online; done
+      run:  for file in ./Formula/*.rb; do echo "Testing $file"; brew audit NSIS-Dev/makensis/$(basename ${file%.rb}) --online; done
