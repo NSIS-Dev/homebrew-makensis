@@ -25,7 +25,7 @@ jobs:
 
     - name: Update Homebrew
       if: matrix.os != 'ubuntu-latest'
-      run: brew update
+      run: brew update --auto-update
 
     - name: Tap Repository
       run: brew tap nsis-dev/makensis
