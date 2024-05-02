@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/NSIS-Dev/homebrew-makensis#readme",
   "devDependencies": {
-    "ejs": "^3.1.5",
+    "ejs": "^3.1.10",
     "ejs-lint": "^2.0.0",
     "es6-promise": "^4.2.8",
     "eslint": "^8.44.0",
