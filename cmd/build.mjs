@@ -88,7 +88,7 @@ const createManifest = async (version) => {
 
 const allVersions = Array.isArray(customVersions) && customVersions.length
   ? customVersions
-  : [...stable.v2, ...stable.v3];
+  : [...stable.v3];
 
 console.info(logSymbols.info, `Creating ${allVersions.length} ${allVersions.length === 1 ? 'manifest' : 'manifests'}`);
 
