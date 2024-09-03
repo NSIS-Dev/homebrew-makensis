@@ -1,7 +1,7 @@
 // Dependencies
 import { renderFile } from 'ejs';
 import { sha256 } from 'hash-wasm';
-import { stable } from './data/versions.mjs';
+import versions from './data/versions.mjs';
 import { writeFile, symlink } from 'fs/promises';
 import logSymbols from 'log-symbols';
 import MFH from 'make-fetch-happen';
@@ -12,7 +12,7 @@ const argv = process.argv.slice(2);
 const { _: customVersions } = mri(argv);
 
 const fetch = MFH.defaults({
-  cacheManager: '.cache'
+  cacheManager: '.cache',
 });
 
 const __dirname = path.resolve(path.dirname(''));
@@ -32,18 +32,22 @@ async function getHash(blob) {
 }
 
 async function template(outFile, data) {
-  data.classPrefix = (outFile.startsWith('Aliases/')) ? 'Nsis' : 'Makensis';
+  data.classPrefix = outFile.startsWith('Aliases/') ? 'Nsis' : 'Makensis';
 
-  renderFile(path.join(__dirname, `cmd/data/nsis@${data.versionMajor}.ejs`), data, async (err, contents) => {
-    if (err) {
-      console.error(logSymbols.error, err);
-      return;
+  renderFile(
+    path.join(__dirname, `cmd/data/nsis@${data.versionMajor}.ejs`),
+    data,
+    async (err, contents) => {
+      if (err) {
+        console.error(logSymbols.error, err);
+        return;
+      }
+
+      await writeFile(outFile, contents);
+
+      console.log(logSymbols.success, `Saved: ${outFile}`);
     }
-
-    await writeFile(outFile, contents);
-
-    console.log(logSymbols.success, `Saved: ${outFile}`);
-  });
+  );
 }
 
 const createManifest = async (version) => {
@@ -52,7 +56,10 @@ const createManifest = async (version) => {
   data.version = version;
   data.versionMajor = version[0];
   data.versionNoDot = version.replace(/\./g, '');
-  data.directory = (/\d(a|b|rc)\d*$/.test(data.version) === true) ? `NSIS%20${data.versionMajor}%20Pre-release` : `NSIS%20${data.versionMajor}`;
+  data.directory =
+    /\d(a|b|rc)\d*$/.test(data.version) === true
+      ? `NSIS%20${data.versionMajor}%20Pre-release`
+      : `NSIS%20${data.versionMajor}`;
 
   const zipUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}.zip`;
   const bzUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}-src.tar.bz2`;
@@ -65,12 +72,18 @@ const createManifest = async (version) => {
     data.hashBzip2 = await getHash(await responseBzip.arrayBuffer());
 
     await template(`Formula/makensis@${data.version}.rb`, data);
-  } catch(error) {
+  } catch (error) {
     if (error.statusMessage) {
       if (error.statusMessage === 'Too Many Requests') {
-        return console.warn(logSymbols.warning, `${error.statusMessage}: nsis-${version}.zip`);
+        return console.warn(
+          logSymbols.warning,
+          `${error.statusMessage}: nsis-${version}.zip`
+        );
       }
-      return console.error(logSymbols.error, `${error.statusMessage}: nsis-${version}.zip`);
+      return console.error(
+        logSymbols.error,
+        `${error.statusMessage}: nsis-${version}.zip`
+      );
     } else if (error.code === 'ENOENT') {
       return console.log('Skipping Test: Manifest Not Found');
     }
@@ -79,21 +92,33 @@ const createManifest = async (version) => {
   }
 
   try {
-    await symlink(`../Formula/makensis@${data.version}.rb`, `Aliases/nsis@${data.version}.rb`);
+    await symlink(
+      `../Formula/makensis@${data.version}.rb`,
+      `Aliases/nsis@${data.version}.rb`
+    );
     console.log(logSymbols.success, `Saved: Aliases/nsis@${data.version}.rb`);
   } catch (error) {
-    console.error(logSymbols.warning, `Skipping: Aliases/nsis@${data.version}.rb`);
+    console.error(
+      logSymbols.warning,
+      `Skipping: Aliases/nsis@${data.version}.rb`
+    );
   }
 };
 
-const allVersions = Array.isArray(customVersions) && customVersions.length
-  ? customVersions
-  : [...stable.v3];
+const allVersions =
+  Array.isArray(customVersions) && customVersions.length
+    ? customVersions
+    : versions;
 
-console.info(logSymbols.info, `Creating ${allVersions.length} ${allVersions.length === 1 ? 'manifest' : 'manifests'}`);
+console.info(
+  logSymbols.info,
+  `Creating ${allVersions.length} ${
+    allVersions.length === 1 ? 'manifest' : 'manifests'
+  }`
+);
 
 // All versions
-asyncForEach(allVersions, async key => {
-  const value = stable[key];
+asyncForEach(allVersions, async (key) => {
+  const value = versions[key];
   await createManifest(key, value);
 });
