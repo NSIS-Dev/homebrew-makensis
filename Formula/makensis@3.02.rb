@@ -17,6 +17,13 @@ class MakensisAT302 < Formula
     sha256 "b63bf7cb1e2522754ccb5628e54277f553bc6810d6229d0fe7eb1d78b3457206"
   end
 
+  if build.with?("large-strings")
+    resource "nsis-strlen" do
+      url "https://downloads.sourceforge.net/project/nsis/NSIS%203/3.02/nsis-3.02-strlen_8192.zip"
+      sha256 "b113ecef6d265ca694c6920679221013fa47524c8f5e47cc5e3ed88d6696ff99"
+    end
+  end
+
   def install
     args = [
       "CC=#{ENV.cc}",
@@ -43,6 +50,7 @@ class MakensisAT302 < Formula
     end
 
     bin.install install_path
+    (share/"nsis").install resource("nsis-strlen") if build.with?("large-strings")
     (share/"nsis").install resource("nsis")
   end
 

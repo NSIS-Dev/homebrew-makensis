@@ -1,7 +1,7 @@
 // Dependencies
 import { renderFile } from 'ejs';
 import { sha256 } from 'hash-wasm';
-import versions from './data/versions.mjs';
+import versions from './versions.mjs';
 import { writeFile, symlink } from 'fs/promises';
 import logSymbols from 'log-symbols';
 import MFH from 'make-fetch-happen';
@@ -35,7 +35,7 @@ async function template(outFile, data) {
   data.classPrefix = outFile.startsWith('Aliases/') ? 'Nsis' : 'Makensis';
 
   renderFile(
-    path.join(__dirname, `cmd/data/nsis@${data.versionMajor}.ejs`),
+    path.join(__dirname, `cmd/templates/nsis@${data.versionMajor}.ejs`),
     data,
     async (err, contents) => {
       if (err) {
@@ -61,15 +61,19 @@ const createManifest = async (version) => {
       ? `NSIS%20${data.versionMajor}%20Pre-release`
       : `NSIS%20${data.versionMajor}`;
 
-  const zipUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}.zip`;
   const bzUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}-src.tar.bz2`;
+  const zipUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}.zip`;
+  const strlenZipUrl = `https://downloads.sourceforge.net/project/nsis/${data.directory}/${data.version}/nsis-${data.version}-strlen_8192.zip`;
 
   try {
+    const responseBzip = await fetch(bzUrl);
+    data.hashBzip2 = await getHash(await responseBzip.arrayBuffer());
+
     const responseZip = await fetch(zipUrl);
     data.hashZip = await getHash(await responseZip.arrayBuffer());
 
-    const responseBzip = await fetch(bzUrl);
-    data.hashBzip2 = await getHash(await responseBzip.arrayBuffer());
+    const responseStrlenZip = await fetch(strlenZipUrl);
+    data.hashStrlenZip = await getHash(await responseStrlenZip.arrayBuffer());
 
     await template(`Formula/makensis@${data.version}.rb`, data);
   } catch (error) {

@@ -17,6 +17,13 @@ class <%= classPrefix %>AT<%= versionNoDot %> < Formula
     sha256 "<%= hashZip %>"
   end
 
+  if build.with?("large-strings")
+    resource "nsis-strlen" do
+      url "https://downloads.sourceforge.net/project/nsis/<%= directory %>/<%= version %>/nsis-<%= version %>-strlen_8192.zip"
+      sha256 "<%= hashStrlenZip %>"
+    end
+  end
+
   def install
     args = [
       "CC=#{ENV.cc}",
@@ -43,6 +50,7 @@ class <%= classPrefix %>AT<%= versionNoDot %> < Formula
     end
 
     bin.install install_path
+    (share/"nsis").install resource("nsis-strlen") if build.with?("large-strings")
     (share/"nsis").install resource("nsis")
   end
 
