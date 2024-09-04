@@ -1,7 +1,6 @@
 # homebrew-makensis
 
 [![BSD 2-Clause License](https://flat.badgen.net/badge/license/BSD%202-Clause/blue)](https://opensource.org/licenses/BSD-2-Clause)
-[![Latest Release](https://flat.badgen.net/github/release/NSIS-Dev/homebrew-makensis)](https://github.com/NSIS-Dev/homebrew-makensis/releases)
 
 Homebrew tap for Nullsoft Scriptable Install System (NSIS)
 
@@ -16,26 +15,26 @@ Make sure that [Homebrew](https://brew.sh/) is installed with `brew` in your `PA
 Tap this repository in order to be able to install its formulae
 
 ```sh
-$ brew tap nsis-dev/makensis
+$ brew tap pierluigizagaria/makensis
 ```
 
 ## Usage
 
-You can now install any version of `makensis` between 2.34 and the latest using the command `brew install makensis@<version>`
+You can now install any version of `makensis` between 3.0 and the latest using the command `brew install makensis@<version>`
 
 **Example:**
 
 ```sh
 $ brew install makensis@3.03
-$ brew install makensis@2.51
+$ brew install makensis@3.10
 ```
 
-To switch between installed versions, use the  command `brew link makensis@<version>`
+To switch between installed versions, use the command `brew link makensis@<version>`
 
 **Example:**
 
 ```sh
-$ brew link makensis@2.51
+$ brew link makensis@3.03
 ```
 
 **Note:** Some older formulas might no longer build on newer versions of Homebrew. If you're aware of fixes or workarounds, please submit a PR.
