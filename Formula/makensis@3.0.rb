@@ -6,15 +6,13 @@ class MakensisAT30 < Formula
   license "Zlib"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fc4524675c0efffcdedcc5bb92d348afa0577c33fd69e1ef75a8da48cf0c6e90"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4e9d197faa2cb6ee296902f69def0deb0dcc30db077cc6ff2943e12a5c4bdb3c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "4656747f66941fb5b2f4adaad2c4bdd64e99a48c1938a580f91befce75700c4d"
-    sha256 cellar: :any_skip_relocation, ventura:        "4532aeda1faa4cd83fe4c881f34a59dc87e4e24d69b1b6b196ac16e84ede3a21"
-    sha256 cellar: :any_skip_relocation, monterey:       "e4df4ea446eaf4b905b3e9f102a133894cb36d7b33620be03b5374fa59703975"
-    sha256 cellar: :any_skip_relocation, big_sur:        "21f3aa213be2e8c0a0a2d992fb117cc5e5c5cf625b3299bcf1f7506c117900f5"
-    sha256 cellar: :any_skip_relocation, catalina:       "0e86809dd3b7c95a587bc467a7b12a2ab07cacf91f31ead7174fffe3cc1d7c6f"
-    sha256 cellar: :any_skip_relocation, mojave:         "d2c3aeb784d8aa8192360a20a7410b5b4f617deae10d59b18535cafa2bc5809f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ed7437e47f43473d9a9a81652697d21373f11346401fc7a20d0a35357ca73ea8"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "edd2d0dcc5ca368334522b123210e7d9d3336efc5e0091f12500fa02a8e304d8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma: "065f088b4c9681f571c8e73b76bcd730ac34b5ab86ac011707d31b28479b8533"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "71dd1af5b0c2c9a040bac2d58965ba3141dbb2c23a95f36d7ad7fb2b2e1b40fa"
+    sha256 cellar: :any_skip_relocation, sonoma: "985171f35c2c617499f333b4926367ee656660b85e9a83c045a691633e1af9d1"
+    sha256 cellar: :any_skip_relocation, ventura: "b41b708bb2a20b5f006d3123070d7a9d16c02796201a86fa5456b7673a299994"
+    sha256 cellar: :any_skip_relocation, arm64_linux: "232ea0628f6282522669f5d4763bfe740ce920696e1f4fb0e5c68f4eabc186c3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "2c8e1672901d8376fcbcc0579302f0338629852fde0a262cdab694613fe89785"
   end
 
   option "with-advanced-logging", "Enable advanced logging of all installer actions"
